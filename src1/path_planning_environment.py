@@ -209,13 +209,9 @@ class RLPathPlanningEnvironment:
             
             target = random.choice(possible_targets) if possible_targets else start_locations[i]
             
-            # Calculate optimal path for reference (not given to agent)
-            try:
-                optimal_path = nx.shortest_path(self.path_graph, start_locations[i], target, weight='weight')
-                optimal_path_length = nx.shortest_path_length(self.path_graph, start_locations[i], target, weight='weight')
-            except:
-                optimal_path = [start_locations[i], target]
-                optimal_path_length = self.euclidean_distance(start_locations[i], target)
+            # Use fast Euclidean distance as optimal path approximation
+            # This removes the expensive NetworkX shortest_path calculation
+            optimal_path_length = self.euclidean_distance(start_locations[i], target)
             
             self.agents[f'agent_{i}'] = {
                 'current_location': start_locations[i],
