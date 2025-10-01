@@ -6,6 +6,21 @@ Install all required packages for the RL Path Planning System
 import subprocess
 import sys
 
+# Add PyTorch for GPU support
+def install_pytorch():
+    subprocess.check_call([
+        sys.executable,
+        "-m",
+        "pip",
+        "install",
+        "torch",
+        "--extra-index-url",
+        "https://download.pytorch.org/whl/cu118"
+    ])
+
+if __name__ == "__main__":
+    install_pytorch()
+
 def install_requirements():
     """Install all required packages"""
     requirements = [
